@@ -45,3 +45,6 @@ Inside our new urls.py, we’ll create a list of url patterns that a user might 
 We have to make some imports: from django.urls import path will give us the ability to reroute URLSs, and from . import views will import any functions we’ve created in views.py.
 Create a list called urlpatterns
 For each desired URL, add an item to the urlpatterns list that contains a call to the path function with two or three arguments: A string representing the URL path, a function from views.py that we wish to call when that URL is visited, and (optionally) a name for that path, in the format name="something".
+
+
+we’ve created a urls.py for this specific application, and it’s time to edit the urls.py created for us for the entire project. When you open this file, you should see that there’s already a path called admin which we’ll go over in later lectures. We want to add another path for our new app, so we’ll add an item to the urlpatterns list. This follows the same pattern as our earlier paths, except instead of adding a function from views.py as our second argument, we want to be able to include all of the paths from the urls.py file within our application. To do this, we write: include("APP_NAME.urls"), where include is a function we gain access to by also importing include from django.urls as shown in the urls.py below
