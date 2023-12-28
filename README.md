@@ -22,15 +22,16 @@ Open the directory in your text editor of choice. You’ll notice that some file
 Start the project by running 
 
     ```bash
-    python manage.py 
-    ```
-runserver. This will open a development server, which you can access by visiting the URL provided. This development server is being run locally on your machine, meaning other people cannot access your website.
+    python manage.py runserver
+
+This will open a development server, which you can access by visiting the URL provided. This development server is being run locally on your machine, meaning other people cannot access your website.
 
 
 Next, we’ll have to create an application. Django projects are split into one or more applications. Most of our projects will only require one application, but larger sites can make use of this ability to split a site into multiple apps. To create an application, we run 
 
     ```bash
-    python manage.py 
-    
-startapp APP_NAME. This will create some additional directories and files that will be useful shortly, including views.py.
+    python manage.py startapp APP_NAME 
+
+    ```
+This will create some additional directories and files that will be useful shortly, including views.py.
 Now, we have to install our new app. To do this, we go to settings.py, scroll down to the list of INSTALLED_APPS, and add the name of our new application to this list.
