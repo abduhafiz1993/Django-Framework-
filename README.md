@@ -48,3 +48,8 @@ For each desired URL, add an item to the urlpatterns list that contains a call t
 
 
 we’ve created a urls.py for this specific application, and it’s time to edit the urls.py created for us for the entire project. When you open this file, you should see that there’s already a path called admin which we’ll go over in later lectures. We want to add another path for our new app, so we’ll add an item to the urlpatterns list. This follows the same pattern as our earlier paths, except instead of adding a function from views.py as our second argument, we want to be able to include all of the paths from the urls.py file within our application. To do this, we write: include("APP_NAME.urls"), where include is a function we gain access to by also importing include from django.urls as shown in the urls.py below
+
+
+### Templates
+
+So far, our HTTP Responses, have been only text, but we can include any HTML elements we want to! For example, I could decide to return a blue header instead of just the text in our index function:
