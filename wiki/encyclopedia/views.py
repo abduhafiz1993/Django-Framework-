@@ -91,12 +91,17 @@ def new(request):
             messages.add_message(
             request, messages.WARNING, message="Invalid request form"
             )
-            return render(request, "encyclopedia/new.html",{
+    elif request.method == 'GET':
+
+        return render(request, "encyclopedia/new.html", {
+            "form": NewEntryForm()
+        })
+    
+
+    return render(request, "encyclopedia/new.html",{
                 "form": form
             })
 
 
-
-    return render(request, "encyclopedia/new.html", {
-        "form": NewEntryForm()
-    })
+def edit(request, entry):
+    return render(request, "encyclopedia/edit.html")
