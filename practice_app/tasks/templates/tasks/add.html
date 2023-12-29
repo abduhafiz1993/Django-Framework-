@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<body>
+    <h1>Add tasks</h1>
+    <form action="">
+        <input type="text" name="task">
+        <input type="submit">
+
+        <a href="{% url 'index' %}">View Tasks</a>
+    </form>
+{% endblock %}
