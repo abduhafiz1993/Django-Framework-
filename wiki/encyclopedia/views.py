@@ -64,3 +64,6 @@ def search(request):
             "encyclopedia/search.html",
             {"found_entries": found_entries, "query": query},
         )
+
+def new(request):
+    return render(request, "encylopedia/new.html")
