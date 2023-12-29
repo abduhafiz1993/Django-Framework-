@@ -52,15 +52,12 @@ def search(request):
             {"found_entries": "", "query": query},
         )
     
-    entry = util.list_entries()
+    entries = util.list_entries()
     found_entries = [
         valid_entry
         for valid_entry in entries
         if query.lower() in valid_entry.lower()
     ]
-
-    if query.lower() in valid_entries:
-        found_entries.append(query)
 
     return render(
             request,
