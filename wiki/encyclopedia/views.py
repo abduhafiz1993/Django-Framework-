@@ -106,31 +106,19 @@ def edit(request, entry):
     if request.method == "GET":
         title = entry
         content = util.get_entry(title)
-
-        form = NewEntryForm({
-            "title": title,
-            "content": content
-            })
-        return render(request, "encyclopedia/edit.html", {
-            "form": form
-        })
+        form = NewEntryForm({"title": title, "content": content})
+        return render(
+            request,
+            "encyclopedia/edit.html",
+            {"form": form, "title": title},
+        )
 
     form = NewEntryForm(request.POST)
-    
-    if request.method =="POST":
-        if form.is_valid():
-            
-            title = form.cleaned_data["title"]
-            content = form.cleaned_data["content"]
+    if form.is_valid():
+        title = form.cleaned_data.get("title")
+        content = form.cleaned_data.get("content")
 
-            util.save_entry(title, content)
-            return redirect( "wiki", title)
-        else:
-            messages.add_message(
-            request, messages.WARNING, message="Invalid request form"
-            )
-            return render(request, "encyclopedia/edit.html",{
-                "form": form
-            })
+        util.save_entry(title=title, content=content)
+        return redirect("wiki", title)
             
 
