@@ -70,7 +70,7 @@ def new(request):
 
         form = NewEntryForm(request.POST)
 
-        if form.is_valid:
+        if form.is_valid():
 
 
             title = form.cleaned_data["title"]
