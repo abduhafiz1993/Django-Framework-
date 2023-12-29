@@ -88,6 +88,9 @@ def new(request):
                     file.write(content)
                 return redirect("wiki", title)
         else:
+            messages.add_message(
+            request, messages.WARNING, message="Invalid request form"
+            )
             return render(request, "encyclopedia/new.html",{
                 "form": form
             })
