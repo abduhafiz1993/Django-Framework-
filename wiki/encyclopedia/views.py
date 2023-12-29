@@ -36,7 +36,7 @@ def wiki(request, entry):
     return render(
         request,
         "encyclopedia/wiki.html",
-        {"title": entry
+        {"title": entry, "content": content
         },
     )
 
