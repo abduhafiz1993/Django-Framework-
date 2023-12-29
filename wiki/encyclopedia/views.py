@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from random import randint
 from django.http import Http404
 from django import forms
 from markdown2 import Markdown
@@ -121,4 +122,7 @@ def edit(request, entry):
         util.save_entry(title=title, content=content)
         return redirect("wiki", title)
             
-
+def random(request):
+    entries = util.list_entries()
+    entry = entries[randint(0, len(entries) - 1)]
+    return redirect("wiki", entry)
