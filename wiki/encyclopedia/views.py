@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 from django import forms
+from markdown2 import Markdown
+from django.contrib import messages
 
 from . import util
 
@@ -36,7 +38,7 @@ def wiki(request, entry):
     return render(
         request,
         "encyclopedia/wiki.html",
-        {"title": entry, "content": content
+        {"title": entry, "content": Markdown().convert(content)
         },
     )
 
@@ -51,10 +53,11 @@ def search(request):
         )
     
     entry = util.list_entries()
-    found_entries = []
-    valid_entries = []
-    for valid in entry:
-        valid_entries.append(valid.lower())
+    found_entries = [
+        valid_entry
+        for valid_entry in entries
+        if query.lower() in valid_entry.lower()
+    ]
 
     if query.lower() in valid_entries:
         found_entries.append(query)
@@ -66,4 +69,34 @@ def search(request):
         )
 
 def new(request):
-    return render(request, "encylopedia/new.html")
+    if request.method == 'POST':
+
+        form = NewEntryForm(request.POST)
+
+        if form.is_valid:
+
+
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            
+            
+            if title.lower() in [entry.lower() for entry in util.list_entries()]:
+                messages.add_message(
+                    request,
+                    messages.WARNING,
+                    message=f'Entry "{title}" already exists',
+                )
+            else:
+                with open(f"entries/{title}.md", "w") as file:
+                    file.write(content)
+                return redirect("wiki", title)
+        else:
+            return render(request, "encyclopedia/new.html",{
+                "form": form
+            })
+
+
+
+    return render(request, "encyclopedia/new.html", {
+        "form": NewEntryForm()
+    })
