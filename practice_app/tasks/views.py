@@ -10,7 +10,11 @@ class NewTaskForm(forms.Form):
     task = forms.CharField(label="New Task")
 
 def index(request):
+
+    # Check if there already exists a "tasks" key in our session
+
     if "tasks" not in request.session:
+
         # If not, create a new list
         request.session["tasks"] = []
 
@@ -18,8 +22,8 @@ def index(request):
         "tasks": request.session["tasks"]
     })
 
+# Add a new task:
 def add(request):
-
     if request.method == "POST":
 
         # Take in the data the user submitted and save it as form
@@ -32,17 +36,16 @@ def add(request):
             task = form.cleaned_data["task"]
 
             # Add the new task to our list of tasks
-            request.session["tasks"].append(task)
+            request.session["tasks"] += [task]
 
             # Redirect user to list of tasks
             return HttpResponseRedirect(reverse("tasks:index"))
-
         else:
-
             # If the form is invalid, re-render the page with existing information.
             return render(request, "tasks/add.html", {
                 "form": form
             })
+
     return render(request, "tasks/add.html", {
-        "form": NewTaskForm
+        "form": NewTaskForm()
     })
