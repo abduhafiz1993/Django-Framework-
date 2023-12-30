@@ -87,3 +87,61 @@ example
 ## UPDATE
 
 We’ve now seen how to add to and search tables, but we may also want to be able update rows of a table that already exist. We do this using the UPDATE command as shown below. As you may have guessed by reading this out loud, the command finds any flights that go from New York to London, and then sets their durations to 430
+    ```bash
+
+    UPDATE flights
+        SET duration = 430
+        WHERE origin = "New York"
+        AND destination = "London";
+
+
+## DELETE
+
+We also might want the ability to delete rows from our database, and we can do this using the DELETE command. The following code will remove all flights that land in Tokyo:
+    ```bash
+
+    DELETE FROM flights WHERE destination = "Tokyo";
+
+
+## Other Clauses
+
+
+There are a number of additional clauses we can use to control queries coming back to us
+
+- LIMIT: Limits the number of results returned by a query
+- ORDER BY: Orders the results based on a specified column
+- GROUP BY: Groups results by a specified column
+- HAVING: Allows for additional constraints based on the number of results
+
+### LIMIT:
+    ```bash
+    SELECT * FROM Employees LIMIT 10;
+    ```
+
+This query retrieves the first 10 rows from the "Employees" table, limiting the result set to only 10 records.
+
+
+### ORDER BY:
+
+    ```bash
+    SELECT * FROM Employees ORDER BY salary DESC;
+    ```
+This query retrieves all rows from the "Employees" table and orders the results in descending order based on the "salary" column. The employees with the highest salaries will be listed first.
+
+### GROUP BY:
+    ```bash
+    SELECT department, COUNT(*) FROM Employees GROUP BY department;
+    ```
+This query groups the rows in the "Employees" table by the "department" column and calculates the count of employees in each department. It returns the department name and the corresponding employee count for each group.
+
+### HAVING:
+
+    ```bash
+    SELECT department, AVG(salary) FROM Employees GROUP BY department HAVING AVG(salary) > 50000;
+    ```
+
+This query groups the rows in the "Employees" table by the "department" column, calculates the average salary for each department, and returns only the departments where the average salary is greater than 50,000. The HAVING clause applies the additional constraint on the aggregated values.
+
+These examples illustrate how the LIMIT, ORDER BY, GROUP BY, and HAVING clauses can be used to control the results of SQL queries. They allow you to limit the number of rows returned, order the results based on specific columns, group data, and apply additional conditions based on aggregated values.
+
+
