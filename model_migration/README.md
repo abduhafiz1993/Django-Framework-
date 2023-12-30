@@ -144,4 +144,33 @@ This query groups the rows in the "Employees" table by the "department" column, 
 
 These examples illustrate how the LIMIT, ORDER BY, GROUP BY, and HAVING clauses can be used to control the results of SQL queries. They allow you to limit the number of rows returned, order the results based on specific columns, group data, and apply additional conditions based on aggregated values.
 
+### Joining Tables
 
+So far, we’ve only been working with one table at a time, but many databases in practice are populated by a number of tables that all relate to each other in some way. In our flights example, let’s imagine we also want to add an airport code to go with the city. The way our table is currently set up, we would have to add two more columns to go with each row. We would also be repeating information, as we would have to write in multiple places that city X is associated with code Y.
+
+### JOIN Query
+Although our data is now more efficiently stored, it seems like it may be harder to query our data. Thankfully, SQL has a JOIN query where we can combine two tables for the purposes of another query.
+
+For example, let’s say we want to find the origin, destination, and first name of every trip a passenger is taking. Also for simplicity in this table, we’re going to be using the unoptimized passengers table that includes the flight id, first name, and last name. The first part of this query looks fairly familiar:
+
+    ```bash
+    SELECT first, origin, destination
+    FROM ...
+    ```
+
+
+But we run into a problem here because first is stored in the passengers table, while origin and destination are stored in the flights table. We solve this by joining the two tables using the fact that flight_id in the passengers table corresponds to id in the flights table:
+
+    ```bash
+
+    SELECT first, origin, destination
+    FROM flights JOIN passengers
+    ON passengers.flight_id = flights.id;
+    ```
+
+### Indexing
+
+One way we can make our queries more efficient when dealing with large tables is to create an index similar to the index you might see in the back of a textbook. For example, if we know that we’ll often look up passengers by their last name, we could create an index from last name to id using the command:
+    ```bash
+    CREATE INDEX name_index ON passengers (last);
+    ```
