@@ -174,3 +174,29 @@ One way we can make our queries more efficient when dealing with large tables is
     ```bash
     CREATE INDEX name_index ON passengers (last);
     ```
+
+### Django Models
+
+Django Models are a level of abstraction on top of SQL that allow us to work with databases using Python classes and objects rather than direct SQL queries.
+
+Let’s get started on using models by creating a django project for our airline, and creating an app within that project
+
+### Migrations
+
+
+Now, even though we’ve created a model, we do not yet have a database to store this information. to create a database from our models, we navigate to the main directory of our project and run the command.
+
+    ```bash
+    python manage.py makemigrations
+    ```
+
+This command creates some Python files that will create or edit our database to be able to store what we have in our models. You should get an output that looks something like the one below, and if you navigate to your migrations directory, you’ll notice a new file was created for us
+
+
+Next, to apply these migrations to our database, we run the command
+
+    ```bash
+    python manage.py migrate
+    ```
+    
+Now, you’ll see some default migrations have been applied along with our own, and you’ll also notice that we now have a file called db.sqlite3 in our project’s directory
