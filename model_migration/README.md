@@ -198,5 +198,18 @@ Next, to apply these migrations to our database, we run the command
     ```bash
     python manage.py migrate
     ```
-    
+
 Now, you’ll see some default migrations have been applied along with our own, and you’ll also notice that we now have a file called db.sqlite3 in our project’s directory
+
+### Shell
+
+Now, to begin working adding information to and manipulating this database, we can enter Django’s shell where we can run Python commands within our project.
+
+by command
+
+    ```bash
+    python manage.py
+    ```
+
+
+
