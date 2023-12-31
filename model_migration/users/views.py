@@ -28,8 +28,11 @@ def login_view(request):
             return render(request, "users/login.html", {
                 "message": "Invalid Credentials"
             })
-     return render(request, "users/login.html")
+    return render(request, "users/login.html")
+
 
 def logout_view(request):
-    # Pass is a simple way to tell python to do nothing.
-    
+    logout(request)
+    return render(request, "users/login.html", {
+                "message": "Logged Out"
+            })
