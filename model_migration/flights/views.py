@@ -14,3 +14,6 @@ def flight(request, number):
         "flight": flight,
         "passengers": passengers
     })
+
+def book(request, number):
+    pass
