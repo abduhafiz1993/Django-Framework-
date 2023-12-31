@@ -1,0 +1,18 @@
+h1 {
+  color: #71C9CE;
+  font-size: 24px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul a {
+  color: #CBF1F5;
+  text-decoration: none;
+}
+ul a:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=styles.css.map */
