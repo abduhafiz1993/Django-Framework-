@@ -2,14 +2,14 @@
 
 {% block body %}
 
-<h1>Flight: {{ flight.id }}</h1>
+<h1 style="text-align: center;">Flight: {{ flight.id }}</h1>
 <ul>
     <li>Origin: {{ flight.origin }}</li>
     <li>Destination: {{ flight.destination }}</li>
     <li>Duration: {{ flight.duration }}</li>
 </ul>
 
-<h2>Passengers:</h2>
+<h2 style="text-align: center;">Passengers:</h2>
 
 <ul>
     {% for passenger in passengers %}
@@ -28,5 +28,6 @@
     </select>
     <input type="submit">
 </form>
+<br>
 <a href="{% url 'flights:index' %}">All page</a>
 {% endblock %}

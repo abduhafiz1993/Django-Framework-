@@ -30,4 +30,4 @@ def book(request, number ):
 
         passenger.flights.add(flight)
 
-        return HttpResponseRedirect(reverse('flight', args=(number,)))
+        return HttpResponseRedirect(reverse('flights:flight', args=(number,)))
