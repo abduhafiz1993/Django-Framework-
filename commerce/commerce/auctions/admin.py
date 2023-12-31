@@ -20,4 +20,4 @@ class BidAdmin(admin.ModelAdmin):
 
 admin.site.register(AuctionListing, AuctionListingAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Bid BidAdmin)
+admin.site.register(Bid, BidAdmin)

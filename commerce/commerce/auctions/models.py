@@ -8,6 +8,28 @@ class User(AbstractUser):
 
 
 class AuctionListing(models.Model):
+
+    MOTORS = "MOT"
+    FASHINON = "FAS"
+    ELECTRONICS = "ELE"
+    COLLECTIBLES_ARTS = "ART"
+    HOME_GARDES = "HGA"
+    SPORTING_GOODS = "SPO"
+    TOYS = "TOY"
+    BUSSINES_INDUSTRIAL = "BUS"
+    MUSIC = "MUS"
+
+    CATEGORY = [
+        (MOTORS, "Motors"),
+        (FASHINON, "Fashion"),
+        (ELECTRONICS, "Electronics"),
+        (COLLECTIBLES_ARTS, "Collectibles & Art"),
+        (HOME_GARDES, "Home & Garden"),
+        (SPORTING_GOODS, "Sporting Goods"),
+        (TOYS, "Toys"),
+        (BUSSINES_INDUSTRIAL, "Business & Industrial"),
+        (MUSIC, "Music"),
+    ]
     
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -16,7 +38,7 @@ class AuctionListing(models.Model):
     end_time = models.DateTimeField()
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='auction_images/', blank=True, null=True)
-    category = models.CharField(max_length=50, blank=True, null=True)
+    category = models.CharField(max_length=3, choices = CATEGORY, default = MOTORS)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2)
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='won_auctions', null=True, blank=True)
     closed = models.BooleanField(default=False)
