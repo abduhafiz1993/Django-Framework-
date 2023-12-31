@@ -12,9 +12,11 @@ def index(request):
 def flight(request, number):
     flight = Flight.objects.get(pk=number)
     passengers = flight.passengers.all()
+    non_passenger = Passanger.objects.exclude(flights=flight).all()
     return render(request, "flights/flight.html",{
         "flight": flight,
         "passengers": passengers
+        "non_passengers": non_passenger
     })
 
 def book(request, number ):
@@ -28,4 +30,4 @@ def book(request, number ):
 
         passenger.flights.add(flight)
 
-        return Http
+        return HttpResponseRedirect(reverse('flight', args=(number,)))
