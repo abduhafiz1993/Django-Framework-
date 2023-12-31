@@ -27,6 +27,6 @@ class Passanger(models.Model):
 
 
     def __str__(self):
-        return f"{self.first} {self.last}"
+        return f"{self.first_name} {self.Last_name}"
 
 
