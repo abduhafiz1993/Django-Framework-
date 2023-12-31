@@ -19,3 +19,8 @@ class Flight(models.Model):
 
     def __str__(self):
         return f"{self.id}: {self.origin} to {self.destination}"
+
+class Passanger(models.Model):
+    first_name = models.CharField(max_length(64))
+    Last_name = models.CharField(max_length(64))
+    
