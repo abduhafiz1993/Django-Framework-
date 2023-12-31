@@ -15,7 +15,7 @@ def flight(request, number):
     non_passenger = Passanger.objects.exclude(flights=flight).all()
     return render(request, "flights/flight.html",{
         "flight": flight,
-        "passengers": passengers
+        "passengers": passengers,
         "non_passengers": non_passenger
     })
 
