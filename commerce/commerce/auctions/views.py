@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .form import CreateListingForm, BidForm, CommentForm
+from .form import *
 from django.contrib.auth.models import User
 
 # @login_required

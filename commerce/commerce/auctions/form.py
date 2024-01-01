@@ -26,7 +26,7 @@ class CreateListingForm(forms.ModelForm):
     class Meta:
         model = AuctionListing
         fields = ["title", "description", "category", "image_url"]
-
+'''
 class BidForm(forms.ModelForm):
     """Creates form for Bid model."""
     class Meta:
@@ -59,4 +59,4 @@ class CommentForm(forms.ModelForm):
                 "rows": 1
             })
         }
-
+'''
