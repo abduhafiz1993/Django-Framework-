@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .form import CreateListingForm, BidForm, CommentForm
+from django.contrib.auth.models import User
 
 # @login_required
 
@@ -70,7 +71,7 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
-
+@login_required(login_url="login")
 def create_listing(request):
 
     if request.method == "POST":
@@ -81,14 +82,14 @@ def create_listing(request):
             title = form.cleaned_data["title"]
             description = form.cleaned_data["description"]
             category = form.cleaned_data["category"]
-            image_url = from.cleaned_data["image_url"]
+            image_url = form.cleaned_data["image_url"]
 
             au = AuctionListing(
-                seller = User.objects.get(pk=request.user.id)
+                seller = User.objects.get(pk=request.user.id),
                 title = title,
                 description = description,
-                category = category
-                image_url = image_url
+                category = category,
+                image_url = image_url,
             )
             au.save()
         
