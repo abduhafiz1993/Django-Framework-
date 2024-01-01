@@ -6,7 +6,7 @@ from .models import *
 class CreateListingForm(forms.ModelForm):
     class Meta:
         model = AuctionListing
-        fields = ["title", "description", "category", "image_url"]
+        fields = ["title", "description", "category", "image"]
 
 class BidForm(forms.ModelForm):
     """Creates form for Bid model."""
