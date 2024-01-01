@@ -20,5 +20,5 @@ class CommentForm(forms.ModelForm):
     """Creates form for Comment model."""
     class Meta:
         model = Comment
-        fields = ["comment"]
+        fields = ["text"]
 
