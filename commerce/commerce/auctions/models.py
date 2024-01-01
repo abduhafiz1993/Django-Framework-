@@ -63,5 +63,6 @@ class Comment(models.Model):
     comment_time = models.DateTimeField(auto_now_add=True)
     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
     auction_listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
+    
     def __str__(self):
         return f"Text: {self.text} comment_time: {self.comment_time} commenter:{self.commenter} auction_listing: {self.auction_listing}"

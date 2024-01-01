@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 # @login_required
 
-from .models import User
+from .models import User, AuctionListing
 
 
 def index(request):
