@@ -11,7 +11,10 @@ from .models import User, AuctionListing
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    AuctionListings = Acution_listing.objects.filter(closed=False).order_by("-publication_date")
+    return render(request, "auctions/index.html",{
+        "Acution_listings": AuctionListings
+    })
 
 
 def login_view(request):
