@@ -13,7 +13,7 @@ from .models import User, AuctionListing
 
 
 def index(request):
-    AuctionListings = Acution_listing.objects.filter(closed=False).order_by("-publication_date")
+    AuctionListings = AuctionListing.objects.filter(closed=False).order_by("end_time")
     return render(request, "auctions/index.html",{
         "Acution_listings": AuctionListings
     })

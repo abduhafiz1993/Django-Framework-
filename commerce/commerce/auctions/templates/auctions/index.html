@@ -2,7 +2,7 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    {% for listing AucationListings %}
+    {% for listing in AucationListings %}
     <li>
         <h3><a href="">{{ listing.title }}</a></h3>
         <p>{{ listing.description }}</p>
