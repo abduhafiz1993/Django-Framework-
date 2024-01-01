@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from .form import CreateListingForm, BidForm, CommentForm
 
 # @login_required
 
@@ -67,3 +68,37 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+
+
+def create_listing(request):
+
+    if request.method == "POST":
+        form = CreateListingForm(request.POST)
+        
+        if form.is_valid():
+
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            category = form.cleaned_data["category"]
+            image_url = from.cleaned_data["image_url"]
+
+            au = AuctionListing(
+                seller = User.objects.get(pk=request.user.id)
+                title = title,
+                description = description,
+                category = category
+                image_url = image_url
+            )
+            au.save()
+        
+        else:
+            return render(request, "auctions/create.html", {
+                "form": form
+            })
+
+    return render(request, "auctions/create.html",{
+        "form": CreateListingForm()
+    })
+
+
