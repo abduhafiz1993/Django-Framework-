@@ -1,7 +1,7 @@
 # forms.py
 
 from django import forms
-from .models import AuctionListing
+from .models import *
 
 class CreateListingForm(forms.ModelForm):
     """Creates form for Auction model."""
@@ -19,12 +19,12 @@ class CreateListingForm(forms.ModelForm):
                                         "class": "form-control"
                                     }))
 
-    category = forms.ChoiceField(required=True, choices=Auction.CATEGORY, widget=forms.Select(attrs={
+    category = forms.ChoiceField(required=True, choices=AuctionListing.CATEGORY, widget=forms.Select(attrs={
                                         "class": "form-control"
                                     }))
 
     class Meta:
-        model = Auction
+        model = AuctionListing
         fields = ["title", "description", "category", "image_url"]
 
 class BidForm(forms.ModelForm):
