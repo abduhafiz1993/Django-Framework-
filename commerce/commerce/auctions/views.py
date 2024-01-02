@@ -83,6 +83,10 @@ def create_listing(request):
             description = form.cleaned_data["description"]
             category = form.cleaned_data["category"]
             image = form.cleaned_data["image"]
+            starting_price = form.cleaned_data["starting_price"]
+            current_price = form.cleaned_data["starting_price"]
+            starting_bid = form.cleaned_data["starting_bid"]
+            end_time = form.cleaned_data['end_time']
 
             au = AuctionListing(
                 seller = User.objects.get(pk=request.user.id),
@@ -90,6 +94,10 @@ def create_listing(request):
                 description = description,
                 category = category,
                 image = image,
+                starting_price = starting_price,
+                current_price = current_price,
+                starting_bid =starting_bid,
+                end_time = end_time
             )
             au.save()
 

@@ -6,7 +6,7 @@ from .models import *
 class CreateListingForm(forms.ModelForm):
     class Meta:
         model = AuctionListing
-        exclude = ["winner", "closed", "seller"]
+        exclude = ["winner", "closed", "seller", "current_price"]
 
 class BidForm(forms.ModelForm):
     """Creates form for Bid model."""
