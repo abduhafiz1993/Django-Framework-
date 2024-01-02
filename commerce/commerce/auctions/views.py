@@ -82,16 +82,18 @@ def create_listing(request):
             title = form.cleaned_data["title"]
             description = form.cleaned_data["description"]
             category = form.cleaned_data["category"]
-            image_url = form.cleaned_data["image_url"]
+            image = form.cleaned_data["image"]
 
             au = AuctionListing(
                 seller = User.objects.get(pk=request.user.id),
                 title = title,
                 description = description,
                 category = category,
-                image_url = image_url,
+                image = image,
             )
             au.save()
+
+            return HttpResponseRedirect(reverse('index'))
         
         else:
             return render(request, "auctions/create.html", {
