@@ -37,7 +37,7 @@ class AuctionListing(models.Model):
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
     end_time = models.DateTimeField()
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='auction_images/', blank=True, null=True)
+    image = models.ImageField(upload_to='auctions/static/image', blank=True, null=True)
     category = models.CharField(max_length=3, choices = CATEGORY, default = MOTORS)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2)
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='won_auctions', null=True, blank=True)

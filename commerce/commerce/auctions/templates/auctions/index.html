@@ -8,7 +8,7 @@
         <p>{{ listing.description }}</p>
         <p>Current Price: ${{ listing.current_price }}</p>
         {% if listing.image %}
-          <img src="{{ listing.image }}" alt="{{ listing.title }}">
+          <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
         {% endif %}
     </div>
     {% endfor%}
