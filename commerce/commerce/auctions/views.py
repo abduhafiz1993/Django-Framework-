@@ -73,35 +73,14 @@ def register(request):
 
 @login_required(login_url="login")
 def create_listing(request):
-
     if request.method == "POST":
-        form = CreateListingForm(request.POST)
-        
+        form = CreateListingForm(request.POST, request.FILES)
         if form.is_valid():
-
-            title = form.cleaned_data["title"]
-            description = form.cleaned_data["description"]
-            category = form.cleaned_data["category"]
-            image = form.cleaned_data["image"]
-            starting_price = form.cleaned_data["starting_price"]
-            current_price = form.cleaned_data["starting_price"]
-            starting_bid = form.cleaned_data["starting_bid"]
-            end_time = form.cleaned_data['end_time']
-
-            au = AuctionListing(
-                seller = User.objects.get(pk=request.user.id),
-                title = title,
-                description = description,
-                category = category,
-                image = image,
-                starting_price = starting_price,
-                current_price = current_price,
-                starting_bid =starting_bid,
-                end_time = end_time
-            )
-            au.save()
-
-            return HttpResponseRedirect(reverse('index'))
+            listing = form.save(commit=False)
+            listing.seller = request.user
+            listing.current_price = form.cleaned_data["starting_price"]
+            listing.save()
+            return HttpResponseRedirect(reverse('index'))        
         
         else:
             return render(request, "auctions/create.html", {
@@ -113,6 +92,65 @@ def create_listing(request):
     })
 
 
-def auction(request, auction_id):
-    
-    return render(request, "auctions/auction.html")
+
+def listing_detail(request, pk):
+    listing = get_object_or_404(AuctionListing, pk=pk)
+    bids = Bid.objects.filter(auction_listing=listing).order_by('-amount')
+    comments = Comment.objects.filter(auction_listing=listing).order_by('comment_time')
+
+    if request.method == 'POST':
+        # Handle bid submission
+        bid_form = BidForm(request.POST)
+        if bid_form.is_valid():
+            bid_amount = bid_form.cleaned_data['amount']
+            if bid_amount >= listing.starting_bid and (not bids or bid_amount > bids[0].amount):
+                bid = bid_form.save(commit=False)
+                bid.bidder = request.user
+                bid.auction_listing = listing
+                bid.save()
+                listing.current_price = bid_amount
+                listing.save()
+            else:
+                # Present an error to the user
+                pass
+    else:
+        bid_form = BidForm()
+
+    # Handle adding/removing from watchlist
+    watchlist_status = False
+    if request.user.is_authenticated:
+        watchlist_status = request.user.watchlist.filter(pk=listing.pk).exists()
+
+        if request.method == 'POST':
+            if watchlist_status:
+                request.user.watchlist.remove(listing)
+            else:
+                request.user.watchlist.add(listing)
+            return redirect('listing_detail', pk=pk)
+
+    # Handle closing the auction if the user is the seller
+    if request.user == listing.seller and not listing.closed:
+        if request.method == 'POST' and 'close_auction' in request.POST:
+            listing.winner = bids[0].bidder if bids else None
+            listing.closed = True
+            listing.save()
+
+    # Display winner status if the auction is closed and the user won
+    won_auction = listing.closed and request.user == listing.winner
+
+    # Handle adding comments
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.commenter = request.user
+            comment.auction_listing = listing
+            comment.save()
+            return redirect('listing_detail', pk=pk)
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'listing_detail.html', {'listing': listing, 'bids': bids, 'comments': comments,
+                                                   'bid_form': bid_form, 'watchlist_status': watchlist_status,
+                                                   'won_auction': won_auction, 'comment_form': comment_form})
+                                                   
