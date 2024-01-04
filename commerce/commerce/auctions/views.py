@@ -113,3 +113,6 @@ def create_listing(request):
     })
 
 
+def auction(request, auction_id):
+    
+    return render(request, "auctions/auction.html")
