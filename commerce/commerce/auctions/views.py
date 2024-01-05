@@ -118,8 +118,8 @@ def listing_detail(request, pk):
     else:
         bid_form = BidForm()
 
-    # Handle adding/removing from watchlist
     '''
+    # Handle adding/removing from watchlist
     watchlist_status = False
     if request.user.is_authenticated:
         watchlist_status = request.user.watchlist.filter(pk=listing.pk).exists()
