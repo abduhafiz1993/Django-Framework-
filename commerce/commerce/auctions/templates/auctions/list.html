@@ -3,42 +3,64 @@
 {% extends 'auctions/layout.html' %}
 
 {% block body %}
-  <h2>{{ listing.title }}</h2>
-  <p>{{ listing.description }}</p>
-  <p>Starting Bid: ${{ listing.starting_bid }}</p>
-  <p>Current Price: ${{ listing.current_price }}</p>
+
+<div class="card mb-3">
   {% if listing.image %}
     <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
   {% endif %}
-
-  {% if user.is_authenticated %}
-    <form method="post" action="{% url 'listing' pk=listing.pk %}">
-      {% csrf_token %}
-      <button type="submit" name="close_auction">Close Auction</button>
-    </form>
-
-    <form method="post" action="{% url 'listing' pk=listing.pk %}">
-      {% csrf_token %}
-      <button type="submit" name="watchlist_action">{% if watchlist_status %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}</button>
-    </form>
-
-    <form method="post" action="{% url 'listing' pk=listing.pk %}">
-      {% csrf_token %}
-      {{ bid_form.as_p }}
-      <button type="submit">Place Bid</button>
-    </form>
-
-    <h3>Comments</h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ listing.title }}</h5>
+    <p class="card-text">{{ listing.description }}</p>
+    <p class="card-text">Starting Bid: ${{ listing.starting_bid }}</p>
+    <p class="card-text">Current Price: ${{ listing.current_price }}</p>
+  </div>
+</div>
+<h3>Comments</h3>
     {% for comment in comments %}
-      <p>{{ comment.commenter.username }} said: {{ comment.text }}</p>
-    {% endfor %}
+      <p class="card-text"><small class="text-body-secondary">{{ comment.commenter.username }} said: {{ comment.text }}
+      </small></p>
+      {% endfor %}
+<div  class="row row-cols-1 row-cols-md-3 g-4" >
+ 
+  {% if user.is_authenticated %}
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <form method="post" action="{% url 'listing' pk=listing.pk %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn btn-primary" >Add Comment</button>
+      </form>
+    </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <form method="post" action="{% url 'listing' pk=listing.pk %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit" name="close_auction">Close Auction</button>
+      </form>
+    </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <form method="post" action="{% url 'listing' pk=listing.pk %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit" name="watchlist_action">{% if watchlist_status %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}</button>
+      </form>
+    </div>
+  </div>
 
-    <form method="post" action="{% url 'listing' pk=listing.pk %}">
-      {% csrf_token %}
-      {{ comment_form.as_p }}
-      <button type="submit">Add Comment</button>
-    </form>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <form method="post" action="{% url 'listing' pk=listing.pk %}">
+        {% csrf_token %}
+        {{ bid_form.as_p }}
+        <button class="btn btn-primary" type="submit">Place Bid</button>
+      </form>
+    </div>
+  </div>
+
   {% endif %}
+  </div>
 
   {% if won_auction %}
     <p>Congratulations! You won this auction!</p>

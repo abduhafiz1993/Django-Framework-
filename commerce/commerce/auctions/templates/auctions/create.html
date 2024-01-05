@@ -1,11 +1,11 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
+<div style="margin-left: 30%; margin-right: 30%;">
     <form action="{% url 'createListing' %}" method="post"  enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
         <input type="submit">
     </form>
-
+</div>
 {% endblock %}
