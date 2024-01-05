@@ -30,33 +30,27 @@
         {{ comment_form.as_p }}
         <button type="submit" class="btn btn-primary" >Add Comment</button>
       </form>
-    </div>
-  </div>
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <form method="post" action="{% url 'listing' pk=listing.pk %}">
-        {% csrf_token %}
-        <button class="btn btn-primary" type="submit" name="close_auction">Close Auction</button>
-      </form>
-    </div>
-  </div>
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <form method="post" action="{% url 'listing' pk=listing.pk %}">
-        {% csrf_token %}
-        <button class="btn btn-primary" type="submit" name="watchlist_action">{% if watchlist_status %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}</button>
-      </form>
-    </div>
-  </div>
 
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
       <form method="post" action="{% url 'listing' pk=listing.pk %}">
         {% csrf_token %}
         {{ bid_form.as_p }}
         <button class="btn btn-primary" type="submit">Place Bid</button>
       </form>
+
     </div>
+  </div>
+
+      <form method="post" action="{% url 'listing' pk=listing.pk %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit" name="close_auction">Close Auction</button>
+      </form>
+
+      <form method="post" action="{% url 'listing' pk=listing.pk %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit" name="watchlist_action">{% if watchlist_status %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}</button>
+      </form>
+
+
   </div>
 
   {% endif %}
