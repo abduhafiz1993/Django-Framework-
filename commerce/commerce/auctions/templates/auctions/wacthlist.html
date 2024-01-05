@@ -4,18 +4,25 @@
 {% block body %}
   <h2>Your Watchlist</h2>
   {% if user_watchlist %}
-    <ul>
+    <div>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
       {% for listing in user_watchlist %}
-        <li>
-          <h3><a href="{% url 'listing' pk=listing.pk %}">{{ listing.title }}</a></h3>
-          <p>{{ listing.description }}</p>
-          <p>Current Price: ${{ listing.current_price }}</p>
-          {% if listing.image %}
-            <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
-          {% endif %}
-        </li>
+        <div class="col">
+          <div class="card">
+            {% if listing.image %}
+                <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'listing' pk=listing.pk %}">{{ listing.title }}</a></h5>
+              <p class="card-text">Current Price: ${{ listing.current_price }}</p>
+              <p class="card-text">{{ listing.description }}</p>
+            </div>
+          </div>
+        </div>
       {% endfor %}
-    </ul>
+
+      </div>
+    </div>
   {% else %}
     <p>Your watchlist is empty.</p>
   {% endif %}

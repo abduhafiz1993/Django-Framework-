@@ -1,8 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    {% for listing in Acution_listings %}
+   
 <div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for listing in Acution_listings %}
   <div class="col">
     <div class="card">
       {% if listing.image %}
@@ -15,6 +16,7 @@
       </div>
     </div>
   </div>
+  {% endfor%}
+
 </div>
-    {% endfor%}
 {% endblock %}
