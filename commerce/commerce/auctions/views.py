@@ -154,7 +154,7 @@ def listing_detail(request, pk):
         comment_form = CommentForm()
 
     return render(request, 'auctions/list.html', {'listing': listing, 'bids': bids, 'comments': comments,
-                                                   'bid_form': bid_form,'won_auction': won_auction, 
+                                                   'bid_form': bid_form,'won_auction': won_auction,  'watchlist_status': watchlist_status, 
                                                    'comment_form': comment_form})
 
 
