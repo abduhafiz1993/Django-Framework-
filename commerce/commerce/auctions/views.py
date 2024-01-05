@@ -122,7 +122,7 @@ def listing_detail(request, pk):
     
     watchlist_status = False
     if request.user.is_authenticated:
-        watchlist_status = request.user.watchlist.filter(pk=listing.pk).exists()
+        watchlist_status = request.user.profile.wacthlist.filter(pk=listing.pk).exists()
 
         if request.method == 'POST':
             if watchlist_status:
@@ -160,7 +160,7 @@ def listing_detail(request, pk):
 
 
 def watchlist(request):
-    user_watchlist = request.user.profile.watchlist.all()
+    user_watchlist = request.user.profile.watchlist.filter(pk=listing.pk).exists()
     return render(request, 'auctions/wacthlist.html', {'user_watchlist': user_watchlist})                                             
 
 
