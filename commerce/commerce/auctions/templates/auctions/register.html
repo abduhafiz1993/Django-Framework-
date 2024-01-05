@@ -1,8 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
-    <h2>Register</h2>
+<div style="margin-left: 30%; margin-right: 30%;">    <h2>Register</h2>
 
     {% if message %}
         <div>{{ message }}</div>
@@ -25,6 +24,9 @@
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
 
+
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+
+    </div>
 
 {% endblock %}
