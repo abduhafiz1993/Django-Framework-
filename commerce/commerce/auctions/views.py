@@ -94,7 +94,7 @@ def create_listing(request):
 
 
 def listing_detail(request, pk):
-    listing = get_object_or_404(AuctionListing, pk=pk)
+    listing = AuctionListing.objects.get(pk=pk)
     bids = Bid.objects.filter(auction_listing=listing).order_by('-amount')
     comments = Comment.objects.filter(auction_listing=listing).order_by('comment_time')
 
@@ -113,10 +113,12 @@ def listing_detail(request, pk):
             else:
                 # Present an error to the user
                 pass
+                
     else:
         bid_form = BidForm()
 
     # Handle adding/removing from watchlist
+    '''
     watchlist_status = False
     if request.user.is_authenticated:
         watchlist_status = request.user.watchlist.filter(pk=listing.pk).exists()
@@ -127,7 +129,7 @@ def listing_detail(request, pk):
             else:
                 request.user.watchlist.add(listing)
             return redirect('listing_detail', pk=pk)
-
+    '''
     # Handle closing the auction if the user is the seller
     if request.user == listing.seller and not listing.closed:
         if request.method == 'POST' and 'close_auction' in request.POST:
@@ -150,7 +152,7 @@ def listing_detail(request, pk):
     else:
         comment_form = CommentForm()
 
-    return render(request, 'listing_detail.html', {'listing': listing, 'bids': bids, 'comments': comments,
-                                                   'bid_form': bid_form, 'watchlist_status': watchlist_status,
-                                                   'won_auction': won_auction, 'comment_form': comment_form})
+    return render(request, '/auctions/list.html', {'listing': listing, 'bids': bids, 'comments': comments,
+                                                   'bid_form': bid_form,'won_auction': won_auction, 
+                                                   'comment_form': comment_form})
                                                    

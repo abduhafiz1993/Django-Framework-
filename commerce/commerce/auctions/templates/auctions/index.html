@@ -4,7 +4,7 @@
     <h2>Active Listings</h2>
     {% for listing in Acution_listings %}
     <div>
-        <h3><a href="">{{ listing.title }}</a></h3>
+        <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
         <p>{{ listing.description }}</p>
         <p>Current Price: ${{ listing.current_price }}</p>
         {% if listing.image %}

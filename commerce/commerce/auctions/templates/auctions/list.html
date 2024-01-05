@@ -12,17 +12,17 @@
   {% endif %}
 
   {% if user.is_authenticated %}
-    <form method="post" action="{% url 'listing_detail' pk=listing.pk %}">
+    <form method="post" action="{% url 'listing' pk=listing.pk %}">
       {% csrf_token %}
       <button type="submit" name="close_auction">Close Auction</button>
     </form>
 
-    <form method="post" action="{% url 'listing_detail' pk=listing.pk %}">
+    <form method="post" action="{% url 'listing' pk=listing.pk %}">
       {% csrf_token %}
       <button type="submit" name="watchlist_action">{% if watchlist_status %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}</button>
     </form>
 
-    <form method="post" action="{% url 'listing_detail' pk=listing.pk %}">
+    <form method="post" action="{% url 'listing' pk=listing.pk %}">
       {% csrf_token %}
       {{ bid_form.as_p }}
       <button type="submit">Place Bid</button>
@@ -33,7 +33,7 @@
       <p>{{ comment.commenter.username }} said: {{ comment.text }}</p>
     {% endfor %}
 
-    <form method="post" action="{% url 'listing_detail' pk=listing.pk %}">
+    <form method="post" action="{% url 'listing' pk=listing.pk %}">
       {% csrf_token %}
       {{ comment_form.as_p }}
       <button type="submit">Add Comment</button>

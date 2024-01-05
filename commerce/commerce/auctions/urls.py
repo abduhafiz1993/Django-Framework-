@@ -9,7 +9,7 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("createListing", views.create_listing, name="createListing"),
+    path("listing/<int:pk>",views.listing_detail, name = "listing"),
 
-    
 
 ]
