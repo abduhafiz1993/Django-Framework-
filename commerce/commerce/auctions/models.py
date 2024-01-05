@@ -67,3 +67,12 @@ class Comment(models.Model):
     
     def __str__(self):
         return f"Text: {self.text} comment_time: {self.comment_time} commenter:{self.commenter} auction_listing: {self.auction_listing}"
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    watchlist = models.ManyToManyField('AuctionListing', blank=True)
+
+
+    def __str__(self):
+        return f"{self.user} wathinglist {self.watchlist}"

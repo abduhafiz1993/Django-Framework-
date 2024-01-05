@@ -102,11 +102,12 @@ def listing_detail(request, pk):
         # Handle bid submission
         bid_form = BidForm(request.POST)
         if bid_form.is_valid():
-            bid_amount = bid_form.cleaned_data['amount']
+            bid_amount = bid_form.cleaned_data['bid_price']
             if bid_amount >= listing.starting_bid and (not bids or bid_amount > bids[0].amount):
                 bid = bid_form.save(commit=False)
                 bid.bidder = request.user
                 bid.auction_listing = listing
+                bid.amount = bid_form.cleaned_data["bid_price"]
                 bid.save()
                 listing.current_price = bid_amount
                 listing.save()
@@ -152,7 +153,12 @@ def listing_detail(request, pk):
     else:
         comment_form = CommentForm()
 
-    return render(request, '/auctions/list.html', {'listing': listing, 'bids': bids, 'comments': comments,
+    return render(request, 'auctions/list.html', {'listing': listing, 'bids': bids, 'comments': comments,
                                                    'bid_form': bid_form,'won_auction': won_auction, 
                                                    'comment_form': comment_form})
-                                                   
+
+
+
+def watchlist(request):
+    user_watchlist = UserProfile.objects.filter(user = request.user)
+    return render(request, 'aucations/watchlist.html', {'user_watchlist': user_watchlist})                                             
