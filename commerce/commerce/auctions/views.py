@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 # @login_required
 
-from .models import User, AuctionListing, UserProfile
+from .models import User, AuctionListing
 
 
 def index(request):
@@ -119,6 +119,7 @@ def listing_detail(request, pk):
         bid_form = BidForm()
 
     # Handle adding/removing from watchlist
+    
     watchlist_status = False
     if request.user.is_authenticated:
         watchlist_status = request.user.watchlist.filter(pk=listing.pk).exists()
@@ -128,8 +129,8 @@ def listing_detail(request, pk):
                 request.user.watchlist.remove(listing)
             else:
                 request.user.watchlist.add(listing)
-            return redirect('listing_detail', pk=pk)
-
+            return redirect('listing', pk=pk)
+    
     # Handle closing the auction if the user is the seller
     if request.user == listing.seller and not listing.closed:
         if request.method == 'POST' and 'close_auction' in request.POST:
@@ -159,5 +160,13 @@ def listing_detail(request, pk):
 
 
 def watchlist(request):
-    user_watchlist = UserProfile.objects.filter(user = request.user)
-    return render(request, 'auctions/watchlist.html', {'user_watchlist': user_watchlist})                                             
+    user_watchlist = request.user.profile.watchlist.all()
+    return render(request, 'auctions/wacthlist.html', {'user_watchlist': user_watchlist})                                             
+
+
+
+
+
+def categories(request):
+    categories = AuctionListing.objects.values_list('category', flat=True).distinct().exclude(category__isnull=True)
+    return render(request, 'categories.html', {'categories': categories})

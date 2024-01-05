@@ -76,3 +76,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user} wathinglist {self.watchlist}"
+
+
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
