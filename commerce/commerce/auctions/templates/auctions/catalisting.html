@@ -1,0 +1,23 @@
+<!-- category_listings.html -->
+
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+  <h2>{{ category }} Listings</h2>
+  {% if active_listings %}
+    <ul>
+      {% for listing in active_listings %}
+        <li>
+          <h3><a href="{% url 'listing' pk=listing.pk %}">{{ listing.title }}</a></h3>
+          <p>{{ listing.description }}</p>
+          <p>Current Price: ${{ listing.current_price }}</p>
+          {% if listing.image %}
+            <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No active listings in this category.</p>
+  {% endif %}
+{% endblock %}

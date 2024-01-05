@@ -164,9 +164,11 @@ def watchlist(request):
     return render(request, 'auctions/wacthlist.html', {'user_watchlist': user_watchlist})                                             
 
 
-
+def category_listings(request, category):
+    active_listings = AuctionListing.objects.filter(category=category)
+    return render(request, 'auctions/catalisting.html', {'category': category, 'active_listings': active_listings})
 
 
 def categories(request):
     categories = AuctionListing.objects.values_list('category', flat=True).distinct().exclude(category__isnull=True)
-    return render(request, 'categories.html', {'categories': categories})
+    return render(request, 'auctions/cata.html', {'categories': categories})
