@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AuctionListing, Comment, Bid, User
+from .models import AuctionListing, Comment, Bid, User, UserProfile
 
 
 class AuctionListingAdmin(admin.ModelAdmin):
@@ -22,3 +22,4 @@ admin.site.register(AuctionListing, AuctionListingAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Bid, BidAdmin)
 admin.site.register(User)
+admin.site.register(UserProfile)
