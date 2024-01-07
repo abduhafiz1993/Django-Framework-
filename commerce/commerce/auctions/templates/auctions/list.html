@@ -43,11 +43,12 @@
 </div>
   </div>
 
+  {% if request.user == listing.seller and not listing.closed %}
   <form method="post" action="{% url 'listing' pk=listing.pk %}">
     {% csrf_token %}
     <button class="btn btn-primary" type="submit" name="close_auction">Close Auction</button>
   </form>
-
+  {% endif %}
   <form method="post" action="{% url 'listing' pk=listing.pk %}">
     {% csrf_token %}
     <button class="btn btn-primary" type="submit" name="watchlist_action">{% if watchlist_status %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}</button>

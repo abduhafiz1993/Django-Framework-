@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .form import *
@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 # @login_required
 
-from .models import User, AuctionListing
+from .models import User, AuctionListing, UserProfile
 
 
 def index(request):
@@ -126,9 +126,9 @@ def listing_detail(request, pk):
 
         if request.method == 'POST':
             if watchlist_status:
-                request.user.watchlist.remove(listing)
+                request.user.profile.watchlist.remove(listing)
             else:
-                request.user.watchlist.add(listing)
+                request.user.profile.watchlist.add(listing)
             return redirect('listing', pk=pk)
     
     # Handle closing the auction if the user is the seller
@@ -147,9 +147,9 @@ def listing_detail(request, pk):
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.commenter = request.user
-            comment.auction_listing = listing
+            comment.auction_listing = pk
             comment.save()
-            return redirect('listing_detail', pk=pk)
+            return redirect('listing', pk=pk)
     else:
         comment_form = CommentForm()
 
@@ -160,7 +160,7 @@ def listing_detail(request, pk):
 
 
 def watchlist(request):
-    user_watchlist = request.user.profile.watchlist.filter(pk=listing.pk).exists()
+    user_watchlist = request.user.profile.watchlist.all()
     return render(request, 'auctions/wacthlist.html', {'user_watchlist': user_watchlist})                                             
 
 
