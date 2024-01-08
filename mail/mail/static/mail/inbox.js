@@ -25,18 +25,34 @@ function load_mailbox(mailbox) {
 
 
 function send_email(){
-  console.log("hi")
+  const recipientsValue = recipients.value;
+  const subjectValue = subject.value;
+  const bodyValue = subject.body;
+
+  fetch('/emails', {
+    method:'POST',
+    body:JSON.stringify({
+      recipients:recipientsValue,
+      subject:subjectValue,
+      body: bodyValue
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+    load_mailbox('sent');
+  });
   return false
 }
 
 document.addEventListener('DOMContentLoaded', function() {
 
   // varibales
-  emailsView = document.querySelector('#emails-view');
-  compose = document.querySelector('#compose-view');
-  recipients = document.querySelector('#compose-recipients');
-  subject =  document.querySelector('#compose-subject');
-  body = document.querySelector('#compose-body');
+  const emailsView = document.querySelector('#emails-view');
+  const compose = document.querySelector('#compose-view');
+  const recipients = document.querySelector('#compose-recipients');
+  const subject =  document.querySelector('#compose-subject');
+  const body = document.querySelector('#compose-body');
 
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
