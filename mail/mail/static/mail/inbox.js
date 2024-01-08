@@ -20,7 +20,7 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   emailsView.innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
-  console.log("am working load")
+  
 }
 
 
@@ -48,11 +48,11 @@ function send_email(){
 document.addEventListener('DOMContentLoaded', function() {
 
   // varibales
-  const emailsView = document.querySelector('#emails-view');
-  const compose = document.querySelector('#compose-view');
-  const recipients = document.querySelector('#compose-recipients');
-  const subject =  document.querySelector('#compose-subject');
-  const body = document.querySelector('#compose-body');
+  emailsView = document.querySelector('#emails-view');
+  compose = document.querySelector('#compose-view');
+  recipients = document.querySelector('#compose-recipients');
+  subject =  document.querySelector('#compose-subject');
+  body = document.querySelector('#compose-body');
 
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
