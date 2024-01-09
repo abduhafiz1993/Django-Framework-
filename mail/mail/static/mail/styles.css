@@ -6,3 +6,11 @@ textarea {
 .read {
     background-color: gray;
 }
+
+.unread {
+    background-color: white;
+}
+ 
+button{
+    margin: 10px;
+}
