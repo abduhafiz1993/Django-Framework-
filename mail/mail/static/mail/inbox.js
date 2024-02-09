@@ -24,7 +24,7 @@ function email_view(id){
     compose.style.display = 'none';
     detail.style.display = 'block';
 
-    document.querySelector('#email-detail-view').innerHTML = `
+    detail.innerHTML = `
     <ul class="list-group">
       <li class="list-group-item"><strong>From:</strong> ${email.sender}</li>
       <li class="list-group-item"><strong>To:</strong> ${email.recipients}</li>
@@ -46,7 +46,6 @@ function email_view(id){
 
     const btn_arch = document.createElement('button');
     btn_arch.innerHTML = email.archived ? "Unarchive" : "Archive";
-    btn_arch.className = email.archived ? "btn btn-success" : "btn btn-danger";
     btn_arch.addEventListener('click', function() {
       fetch(`/emails/${email.id}`, {
         method: 'PUT',
@@ -56,13 +55,12 @@ function email_view(id){
       })
       .then(() => {load_mailbox('archive')})
     });
-    document.querySelector('#email-detail-view').append(btn_arch);
+    detail.append(btn_arch);
 
 
     // Reply logic
     const btn_reply = document.createElement('button');
     btn_reply.innerHTML = "Reply"
-    btn_reply.className = "btn btn-info"
     btn_reply.addEventListener('click', function() {
       compose_email();
 
@@ -74,7 +72,7 @@ function email_view(id){
       document.querySelector('#compose-subject').value = subject;
       document.querySelector('#compose-body').value = `On ${email.timestamp} ${email.sender} wrote: ${email.body}`;
     });
-    document.querySelector('#email-detail-view').append(btn_reply);
+    detail.append(btn_reply);
   });
 }
 
@@ -84,6 +82,7 @@ function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
   emailsView.style.display = 'block';
+  detail.style.display = 'none';
   compose.style.display = 'none';
 
   // Show the mailbox name
@@ -98,7 +97,7 @@ function load_mailbox(mailbox) {
       console.log(singleEmail);
 
       const element = document.createElement('div');
-      element.className = "listitem"
+      element.className = "list-group-item"
       element.innerHTML = `
         <h6>From: ${singleEmail.sender}</h6>
         <h5>Subject: ${singleEmail.subject}</h5>
@@ -107,7 +106,9 @@ function load_mailbox(mailbox) {
 
       singleEmail.className = singleEmail.read ? 'read': 'unread';
       
-      element.addEventListener('click', email_view(singleEmail.id));
+      element.onclick = () => {
+        email_view(singleEmail.id)
+      };
 
       emailsView.append(element);
 
