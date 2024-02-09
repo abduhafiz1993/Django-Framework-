@@ -124,7 +124,7 @@ function load_mailbox(mailbox) {
 function send_email(){
   const recipientsValue = recipients.value;
   const subjectValue = subject.value;
-  const bodyValue = subject.body;
+  const bodyValue = body.value;
 
   fetch('/emails', {
     method:'POST',
